@@ -1,10 +1,26 @@
-
 from .models import Group,Split,Expense
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView,CreateView,DetailView,DeleteView,UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404,redirect
+from rest_framework import viewsets
+from .serializers import GroupSerializer,ExpenseSerializer,SplitSerializer
+
+class GroupViewSet(viewsets.ModelViewSet):
+    serializer_class=GroupSerializer
+    queryset=Group.objects.all()
+
+    def get_queryset(self):
+        return Group.objects.filter(members=self.request.user)
+    
+class ExpenseViewSet(viewsets.ModelViewSet):
+    serializer_class=ExpenseSerializer
+    queryset=Expense.objects.all()
+
+class SplitViewSet(viewsets.ModelViewSet):
+    serializer_class=SplitSerializer
+    queryset=Split.objects.all()
 
 class SignupView(CreateView):
     form_class=UserCreationForm
@@ -54,10 +70,9 @@ class GroupDetailView(LoginRequiredMixin,DetailView):
 class ExpenseCreateView(LoginRequiredMixin,CreateView):
     model=Expense
     template_name='expenses/create_exp.html'
-    fields=['title','amount']
+    fields=['title','amount','paid_by']
 
     def form_valid(self,form):
-        form.instance.paid_by=self.request.user
         form.instance.group=Group.objects.get(pk=self.kwargs['pk'])
         response= super().form_valid(form)
         members=self.object.group.members.all()
@@ -69,6 +84,12 @@ class ExpenseCreateView(LoginRequiredMixin,CreateView):
                 user=member,
             )
         return response
+    
+    def get_form(self, form_class=None):
+        form= super().get_form(form_class)
+        group= Group.objects.get(pk=self.kwargs['pk'])
+        form.fields['paid_by'].queryset= group.members.all()
+        return form
 
     def get_success_url(self):
         return reverse_lazy('group_detail',kwargs={'pk': self.kwargs['pk']})
