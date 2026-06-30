@@ -12,7 +12,7 @@ SECRET_KEY = 'django-insecure-ztyrznyzo*h2vyg73!+!0n2mecu8fn+_vpi)y$dg7a1xe$$1z7
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['expense-splitter-hussaan.up.railway.app']
+ALLOWED_HOSTS = ['expense-splitter-hussaan.up.railway.app', 'localhost', '127.0.0.1']
 
 
 INSTALLED_APPS = [

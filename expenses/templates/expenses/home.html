@@ -10,9 +10,9 @@
         <hr class="mb-4">
         {% for group in groups %}
             <a href="{% url 'group_detail' group.pk %}" 
-               class="block p-3 mb-2 bg-blue-50 rounded hover:bg-blue-50 text-gray-800">
-                {{ group.name }}
-            </a>
+            class="block p-3 mb-2 bg-blue-50 rounded hover:bg-blue-100 hover:underline cursor-pointer text-gray-800">
+            {{ group.name }}
+        </a>
         {% empty %}
             <p class="text-gray-500">No groups yet.</p>
         {% endfor %}
