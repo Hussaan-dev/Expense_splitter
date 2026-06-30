@@ -10,9 +10,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-ztyrznyzo*h2vyg73!+!0n2mecu8fn+_vpi)y$dg7a1xe$$1z7'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['expense-splitter-hussaan.up.railway.app']
 
 
 INSTALLED_APPS = [
@@ -95,4 +95,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-72a9e9.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://expense-splitter-hussaan.up.railway.app']
