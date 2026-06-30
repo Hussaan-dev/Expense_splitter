@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    input, select[multiple] {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 6px 8px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 8px;
+    }
+    </style>
+</head>
+<body class="bg-gray-100 p-5">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold text-blue-600 mb-4">Edit Group</h1>
+        <hr class="mb-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="flex justify-between mt-4">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Edit Group
+                </button>
+                <a href="{% url 'group_detail' group.pk %}">
+                    <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+                        Cancel
+                    </button>
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

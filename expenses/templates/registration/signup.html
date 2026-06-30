@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: normal; /* prevents bold labels */
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .errorlist {
+            color: red;
+            font-size: 12px;
+            margin: 5px 0;
+            padding-left: 15px;
+        }
+
+        form ul {
+            font-weight: normal;
+            font-size: 12px;
+            color: #666;
+            padding-left: 15px;
+        }
+        
+        form p {
+            font-size: 13px;
+            color: #666;
+            font-weight: normal;
+            margin-bottom: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <h2>Sign up</h2>
+        {{ form.as_p }}
+        <button type="submit">Sign up</button>
+        <p>Already have an account?<a href="{% url 'login' %}"> Login</a></p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Group Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-5">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold text-blue-600 mb-2">{{ group.name }}</h1>
+        <p class="text-gray-600 mb-4">Created by: {{ group.created_by.username }}</p>
+        <h3 class="font-semibold mb-2">Members</h3>
+        {% for member in group.members.all %}
+            <p class="text-gray-700 mb-1">{{ member.username }}</p>
+        {% endfor %}
+        <hr class="my-4">
+        <a href="{% url 'create_expense' group.pk %}">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4">
+                Add Expense
+            </button>
+        </a>
+        <hr class="my-4">
+        <h3 class="font-semibold mb-3">Expenses</h3>
+        {% for expense in expenses %}
+            <div class="flex justify-between items-center p-3 mb-2 bg-gray-50 rounded">
+                <a href="{% url 'expense_detail' expense.pk %}" class="text-blue-800 hover:underline">
+                    {{ expense.title }}
+                </a>
+                <span class="text-gray-600">Rs {{ expense.amount }}</span>
+                <span class="text-black-500 text-sm">{{ expense.paid_by.username }}</span>
+                <span class="text-red-800 text-sm">{{ expense.created_at|date:"M d, Y" }}</span>
+            </div>
+        {% empty %}
+            <p class="text-gray-500">No expenses yet.</p>
+        {% endfor %}
+        <hr class="my-4">
+        <h3 class="font-semibold mb-3">Balance Sheet</h3>
+        {% for member, balance in balances.items %}
+            <div class="flex justify-between items-center p-3 mb-2 bg-gray-50 rounded">
+                <span class="text-gray-800">{{ member.username }}</span>
+                {% if balance > 0 %}
+                    <span class="font-semibold text-green-600">+Rs {{ balance }}</span>
+                {% elif balance < 0 %}
+                    <span class="font-semibold text-red-600">-Rs {{ balance|cut:"-" }}</span>
+                {% else %}
+                    <span class="font-semibold text-gray-600">Rs 0</span>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p class="text-gray-500">No balances to show.</p>
+        {% endfor %}
+        <hr class="my-4">
+        <a href="{% url 'edit_group' group.pk %}">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Edit group
+            </button>
+        </a>
+        <hr class="my-4">
+        <a href="{% url 'del_group' group.pk %}">
+            <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                Delete group
+            </button>
+        </a>
+        <hr class="my-4">
+        <a href="{% url 'home' %}">
+            <button class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+                Back to Home
+            </button>
+        </a>
+    </div>
+</body>
+</html>
