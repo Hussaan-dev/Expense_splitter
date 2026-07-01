@@ -18,9 +18,15 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     serializer_class=ExpenseSerializer
     queryset=Expense.objects.all()
 
+    def get_queryset(self):
+        return Expense.objects.filter(group__members=self.request.user)
+
 class SplitViewSet(viewsets.ModelViewSet):
     serializer_class=SplitSerializer
     queryset=Split.objects.all()
+
+    def get_queryset(self):
+        return Split.objects.filter(expense__group__members=self.request.user)
 
 class SignupView(CreateView):
     form_class=UserCreationForm
